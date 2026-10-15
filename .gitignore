@@ -9,3 +9,10 @@ __pycache__/
 .env*
 private/
 *.log
+dist/
+build/
+*.spec
+*.exe
+*.tar
+*.gz
+connection*.json

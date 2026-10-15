@@ -6,6 +6,7 @@ import subprocess
 import tempfile
 import zipfile
 from pathlib import Path, PurePosixPath
+from audio_tools import tool
 
 MAX_BYTES = 64 * 1024 * 1024
 
@@ -51,21 +52,21 @@ def build(template, replacements, destination):
     destination = Path(destination)
     if destination.exists():
         raise ValueError('Choose a new output filename; existing files are preserved.')
-    ffmpeg = shutil.which('ffmpeg')
-    ffprobe = shutil.which('ffprobe')
+    ffmpeg = tool('ffmpeg')
+    ffprobe = tool('ffprobe')
     if not ffmpeg or not ffprobe:
         raise ValueError('Install FFmpeg and make ffmpeg and ffprobe available on PATH.')
     flags = {'creationflags': subprocess.CREATE_NO_WINDOW} if os.name == 'nt' else {}
     with tempfile.TemporaryDirectory() as temp:
         for index, (name, source) in enumerate(replacements.items()):
             output = Path(temp) / (str(index) + '.mp3')
-            command = [ffmpeg, '-nostdin', '-v', 'error', '-i', str(Path(source).resolve()),
+            command = [ffmpeg, '-nostdin', '-v', 'error', '-protocol_whitelist', 'file,pipe', '-i', str(Path(source).resolve()),
                        '-map_metadata', '-1', '-vn', '-af', 'loudnorm=I=-20:TP=-3:LRA=7',
                        '-ar', '16000', '-ac', '1', '-codec:a', 'libmp3lame', '-b:a', '16k',
                        '-write_xing', '1', '-id3v2_version', '3', str(output)]
             try:
                 subprocess.run(command, check=True, capture_output=True, timeout=120, **flags)
-                result = subprocess.run([ffprobe, '-v', 'error', '-select_streams', 'a:0',
+                result = subprocess.run([ffprobe, '-v', 'error', '-protocol_whitelist', 'file,pipe', '-select_streams', 'a:0',
                     '-show_entries', 'stream=codec_name,sample_rate,channels', '-of', 'csv=p=0',
                     str(output)], check=True, capture_output=True, timeout=30, **flags)
             except (subprocess.SubprocessError, OSError):

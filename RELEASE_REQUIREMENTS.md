@@ -1,9 +1,9 @@
-# Release checklist
+# Release requirements
 
-- Stage only the files explicitly listed in release-files.json; never package a research workspace.
-- Reject symbolic links and paths outside staging. Include no recordings, voice packs, APKs, captures, keys, account data or device identifiers.
-- Scan source and the extracted final archive against privately held owner references and generic address, credential and personal-path patterns. Keep reference values private.
-- Normalize archive metadata and timestamps. Include no Git history, personal author metadata or machine paths.
-- Run synthetic archive-safety checks and a synthetic audio conversion check. Device testing is separate and requires explicit approval.
-- This preview is source only. Review and scan any future executable, dependencies, installer metadata and debug symbols separately.
-- Review the publishing account and any commits before uploading. Preparing this archive does not publish it.
+- Source is copied from release-files.json only, never from a research workspace. No links, personal working folders, credentials, media, voice archives or raw captures.
+- Audit the source, source ZIP, Windows ZIP, executable entries, embedded Python code filenames and archive metadata against privately held owner references and personal-path patterns. Keep reference values private. Public third-party notices and generic library networking examples require separate classification from owner data.
+- Use generic commit author/committer identity. Review the publishing account separately. No source control history is included inside release ZIPs.
+- Normalize ZIP timestamps and comments. Review executable resources and extracted contents. No claim of secure removal based solely on scanning compressed executable bytes.
+- Run archive/protocol/one-write tests, loopback HTTP tests, synthetic audio conversion and validation, hidden source GUI startup and packaged executable startup. Do not contact a physical vacuum during release checks.
+- Label physical compatibility unverified for the new desktop application. Disclose stock-archive and local-key acquisition prerequisites. No automatic device write, retry, firmware change, network configuration change or guaranteed recovery claim.
+- Keep third-party licenses and list build dependencies. Audio tools and voice packs are not bundled.
