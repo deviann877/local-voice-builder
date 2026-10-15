@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.zip
+*.mp3
+*.ogg
+*.wav
+*.flac
+*.m4a
+.env*
+private/
+*.log

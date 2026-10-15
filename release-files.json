@@ -1,0 +1,19 @@
+{
+  "status": "experimental offline builder source preview",
+  "files": [
+    ".gitignore",
+    "LICENSE",
+    "METHOD.md",
+    "PRIVACY.md",
+    "README.md",
+    "RELEASE_REQUIREMENTS.md",
+    "Start-Builder.cmd",
+    "builder.py",
+    "release-files.json",
+    "test_builder.py"
+  ],
+  "include_audio": false,
+  "include_voice_packs": false,
+  "include_research_workspace": false,
+  "include_owner_identifiers": false
+}
